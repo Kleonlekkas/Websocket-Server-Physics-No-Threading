@@ -11,9 +11,9 @@ var directions = {
   UP: 7
 };
 
-var spriteSizes = {
-  WIDTH: 61,
-  HEIGHT: 121
+var squareSizes = {
+  WIDTH: 64,
+  HEIGHT: 64
 };
 
 var lerp = function lerp(v0, v1, alpha) {
@@ -56,9 +56,9 @@ var redraw = function redraw(time) {
       }
     }
 
-    ctx.drawImage(walkImage, spriteSizes.WIDTH * square.frame, spriteSizes.HEIGHT * square.direction, spriteSizes.WIDTH, spriteSizes.HEIGHT, square.x, square.y, spriteSizes.WIDTH, spriteSizes.HEIGHT);
+    ctx.fillRect(square.x, square.y, squareSizes.WIDTH, squareSizes.HEIGHT);
 
-    ctx.strokeRect(square.x, square.y, spriteSizes.WIDTH, spriteSizes.HEIGHT);
+    ctx.strokeRect(square.x, square.y, squareSizes.WIDTH, squareSizes.HEIGHT);
   }
 
   for (var _i = 0; _i < attacks.length; _i++) {
@@ -132,9 +132,28 @@ var keyUpHandler = function keyUpHandler(e) {
       else if (keyPressed === 68 || keyPressed === 39) {
           square.moveRight = false;
         } else if (keyPressed === 32) {
-          sendAttack();
+          //make user jump
+		  var start = Date.now(); // get current date
+		  var end = start + 1000; // 1 second later
+			//square is now jumping so gravity doesnt apply
+			square.isJumping = true;	
+			function squareIsJumping() {
+				start = Date.now();
+		
+				if (start > end) {
+					square.isJumping = false;
+					clearInterval(timer);		
+				}
+			}	
+			var timer = setInterval(squareIsJumping, 100);
+	
         }
 };
+
+//user jumps for about 3 seconds
+var squareJump = function squareJump(square) {
+
+}
 
 var init = function init() {
   walkImage = document.querySelector('#walk');
@@ -233,17 +252,28 @@ var updatePosition = function updatePosition() {
 
   square.prevX = square.x;
   square.prevY = square.y;
+  
+  //move character down if theyre above ground
+  if (square.destY < 424 && square.isJumping === false) {
+	    square.destY = square.destY + (10 * square.gravity);
+  }
+  
+  //if character is jumping
+  if (square.isJumping) {
+	  square.destY -= 1;
+  }
+
 
   if (square.moveUp && square.destY > 0) {
     square.destY -= 2;
   }
-  if (square.moveDown && square.destY < 400) {
+  if (square.moveDown && square.destY < 424) {
     square.destY += 2;
   }
   if (square.moveLeft && square.destX > 0) {
     square.destX -= 2;
   }
-  if (square.moveRight && square.destX < 400) {
+  if (square.moveRight && square.destX < 424) {
     square.destX += 2;
   }
 

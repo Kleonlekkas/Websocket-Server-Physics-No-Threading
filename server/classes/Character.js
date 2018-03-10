@@ -20,6 +20,8 @@ class Character {
     this.moveRight = false; // if character is moving right
     this.moveDown = false; // if character is moving down
     this.moveUp = false; // if character is moving up
+    this.isJumping = false; // if they character is on the ground
+    this.gravity = 1;
   }
 }
 

@@ -1,11 +1,12 @@
 // our socket code for physics to send updates back
-const sockets = require('./sockets.js');
+//const sockets = require('./sockets.js');
 
 let charList = {}; // list of characters
 const attacks = []; // array of attack to handle
 
 // box collision check between two rectangles
 // of a set width/height
+/*
 const checkCollisions = (rect1, rect2, width, height) => {
   if (rect1.x < rect2.x + width &&
      rect1.x + width > rect2.x &&
@@ -14,11 +15,12 @@ const checkCollisions = (rect1, rect2, width, height) => {
     return true; // is colliding
   }
   return false; // is not colliding
-};
+}; */
 
 // check attack collisions to see if colliding with the
 // user themselves and return false so users cannot damage
 // themselves
+/*
 const checkAttackCollision = (character, attackObj) => {
   const attack = attackObj;
 
@@ -29,9 +31,10 @@ const checkAttackCollision = (character, attackObj) => {
 
   // otherwise check collision of user rect and attack rect
   return checkCollisions(character, attack, attack.width, attack.height);
-};
+}; */
 
 // handle each attack and calculate collisions
+/*
 const checkAttacks = () => {
   // if we have attack
   if (attacks.length > 0) {
@@ -67,6 +70,7 @@ const checkAttacks = () => {
     }
   }
 };
+*/
 
 // update our entire character list
 const setCharacterList = (characterList) => {
@@ -83,10 +87,31 @@ const addAttack = (attack) => {
   attacks.push(attack);
 };
 
+// applying gravity force to our characters
+/*
+const applyGravity = () => {
+  const keys = Object.keys(charList);
+  const characters = charList;
+  for (let k = 0; k < keys.length; k++) {
+	// if the character is not on the ground and not moving up
+    if (characters[keys[k]].onGround === false || characters[keys[k]].moveUp === false) {
+      characters[keys[k]].gravity = -1; //copy doesnt actually do anything
+	  //ask sockets to notify which users had their gravity changed
+	   sockets.handleGravity(character: characters[keys[k]].hash, grav: true);
+    } else {
+      characters[keys[k]].gravity = 1;
+	  sockets.handleGravity(charecter: characters[keys[k]].hash, grav: false);
+
+    }
+  }
+}; */
+
 // check for collisions every 20ms
 setInterval(() => {
-  checkAttacks();
+  // checkAttacks();
+  // applyGravity();
 }, 20);
+
 
 module.exports.setCharacterList = setCharacterList;
 module.exports.setCharacter = setCharacter;

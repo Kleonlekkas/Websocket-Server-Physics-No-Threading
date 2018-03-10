@@ -1,7 +1,7 @@
 {
-  "name": "ObjectUpdates",
+  "name": "SyncingDataIII",
   "version": "0.0.0",
-  "description": "A simple application for updating object properties through websockets",
+  "description": "physics and people falling",
   "main": "./server/app.js",
   "scripts": {
     "build": "babel ./client --out-file ./hosted/compiled.js",
@@ -11,7 +11,7 @@
     "pretest": "eslint ./server --fix",
     "test": "echo \"Tests complete\""
   },
-  "author": "Cody Van De Mark",
+  "author": "Kyle Lekkas",
   "license": "ISC",
   "dependencies": {
     "express": "^4.15.2",

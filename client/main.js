@@ -1,11 +1,8 @@
 let canvas;
 let ctx;
-let walkImage; //spritesheet for character
-let slashImage; //image for attack
 //our websocket connection 
 let socket; 
 let hash; //user's unique character id (from the server)
-let animationFrame; //our next animation frame function
 
 let squares = {}; //character list
 let attacks = []; //attacks to draw on screen
@@ -15,7 +12,7 @@ const keyDownHandler = (e) => {
   var keyPressed = e.which;
   const square = squares[hash];
 
-  // W OR UP
+  // W OR UP -------- jump
   if(keyPressed === 87 || keyPressed === 38) {
     square.moveUp = true;
   }
@@ -23,7 +20,7 @@ const keyDownHandler = (e) => {
   else if(keyPressed === 65 || keyPressed === 37) {
     square.moveLeft = true;
   }
-  // S OR DOWN
+  // S OR DOWN ---------- nothing
   else if(keyPressed === 83 || keyPressed === 40) {
     square.moveDown = true;
   }
@@ -54,15 +51,9 @@ const keyUpHandler = (e) => {
   else if(keyPressed === 68 || keyPressed === 39) {
     square.moveRight = false;
   }
-  //Space key was lifted
-  else if(keyPressed === 32) {
-    sendAttack(); //call to invoke an attack
-  }
 };
 
 const init = () => {
-  walkImage = document.querySelector('#walk');
-  slashImage = document.querySelector('#slash');
   
   canvas = document.querySelector('#canvas');
   ctx = canvas.getContext('2d');

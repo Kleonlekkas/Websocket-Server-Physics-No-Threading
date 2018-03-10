@@ -13,9 +13,9 @@ const directions = {
 };
 
 //size of our character sprites
-const spriteSizes = {
-  WIDTH: 61,
-  HEIGHT: 121
+const squareSizes = {
+  WIDTH: 128,
+  HEIGHT: 128
 };
 
 //function to lerp (linear interpolation)
@@ -41,6 +41,8 @@ const redraw = (time) => {
 
     //if alpha less than 1, increase it by 0.01
     if(square.alpha < 1) square.alpha += 0.05;
+	
+	ctx.fillStyle = '#FF0000';
 
     //applying a filter effect to other characters
     //in order to see our character easily
@@ -55,39 +57,13 @@ const redraw = (time) => {
     square.x = lerp(square.prevX, square.destX, square.alpha);
     square.y = lerp(square.prevY, square.destY, square.alpha);
 
-    // if we are mid animation or moving in any direction
-    if(square.frame > 0 || (square.moveUp || square.moveDown || square.moveRight || square.moveLeft)) {
-      //increase our framecount
-      square.frameCount++;
-
-      //every 8 frames increase which sprite image we draw to animate
-      //or reset to the beginning of the animation
-      if(square.frameCount % 8 === 0) {
-        if(square.frame < 7) {
-          square.frame++;
-        } else {
-          square.frame = 0;
-        }
-      }
-    }
-
-    //draw our characters
-    ctx.drawImage(
-      walkImage, 
-      spriteSizes.WIDTH * square.frame,
-      spriteSizes.HEIGHT * square.direction,
-      spriteSizes.WIDTH, 
-      spriteSizes.HEIGHT,
-      square.x, 
-      square.y, 
-      spriteSizes.WIDTH, 
-      spriteSizes.HEIGHT
-    );
+	ctx.fillRect(square.x, square.y, squareSizes.WIDTH, squareSizes.HEIGHT);
     
     //highlight collision box for each character
-    ctx.strokeRect(square.x, square.y, spriteSizes.WIDTH, spriteSizes.HEIGHT);
+    ctx.strokeRect(square.x, square.y, squareSizes.WIDTH, squareSizes.HEIGHT);
   }
   
+  /*
   //for each attack, draw each to the screen
   for(let i = 0; i < attacks.length; i++) {
     const attack = attacks[i];
@@ -112,7 +88,7 @@ const redraw = (time) => {
       //decrease i since splice changes the array length
       i--;
     }
-  }
+  }*/
 
   //set our next animation frame
   animationFrame = requestAnimationFrame(redraw);

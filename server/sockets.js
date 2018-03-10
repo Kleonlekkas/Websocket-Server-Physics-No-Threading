@@ -30,6 +30,10 @@ const handleAttack = (userHash) => {
   io.sockets.in('room1').emit('attackHit', userHash);
 };
 
+// data contains user hash and grav boolean
+// true means they should fall, false means they shouldnt.
+
+
 // function to setup our socket server
 const setupSockets = (ioServer) => {
   // set our io server instance
@@ -127,7 +131,7 @@ const setupSockets = (ioServer) => {
         // add the attack to our physics calculations
         physics.addAttack(attack);
       }
-    });
+    }); //-------------------------------------------------
 
     // when the user disconnects
     socket.on('disconnect', () => {

@@ -49,7 +49,7 @@ const setUser = (data) => {
   requestAnimationFrame(redraw); //start animating
 };
 
-//when receiving an attack (cosmetic, not collision event)
+//when receiving an attack (cosmetic, not collision event) -----------
 //add it to our attacks to draw
 const receiveAttack = (data) => {
   attacks.push(data);
@@ -87,7 +87,7 @@ const playerDeath = (data) => {
     ctx.font = '48px serif';
     ctx.fillText('You died', 50, 100);
   }
-};
+}; // ---------------------------------------
 
 //update this user's positions based on keyboard input
 const updatePosition = () => {
@@ -96,6 +96,9 @@ const updatePosition = () => {
   //move the last x/y to our previous x/y variables
   square.prevX = square.x;
   square.prevY = square.y;
+  
+  //apply gravity
+  square.y = (square.y + (10 * square.gravity)
 
   //if user is moving up, decrease y
   if(square.moveUp && square.destY > 0) {
